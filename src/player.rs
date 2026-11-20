@@ -1,4 +1,5 @@
 use crate::healthsys;
+use crate::items;
 pub use std::io;
 
 pub struct Player {
@@ -29,4 +30,16 @@ pub fn playertitle() -> Player {
     player.name = player.name.trim().to_string();
 
     player
+}
+
+pub fn playerdamage(player: &mut Player) {
+    let player = player;
+    player.damage = match player.item.as_str() {
+        "iron sword" => items::SWORD.damage,
+        "bow" => items::BOW.damage,
+        _ => {
+            println!("bad text :(");
+            player.damage
+        }
+    };
 }

@@ -1,6 +1,14 @@
 use crate::enemies::{self, ALL_ENEMIES, Enemystats};
+use crate::player::Player;
 use rand::Rng;
 use std::io;
+
+pub fn statsdisplay(player: &Player) {
+    println!(
+        "\nplayer: {} has {} health and is currently wielding: {}\nthey do {} per hit",
+        player.name, player.health, player.item, player.damage
+    );
+}
 
 pub fn creaturespawn() -> Enemystats {
     let mut rng = rand::rng();

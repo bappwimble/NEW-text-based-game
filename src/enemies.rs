@@ -1,5 +1,3 @@
-use std;
-
 #[derive(Clone, Copy)]
 pub struct Enemystats {
     pub title: &'static str,
