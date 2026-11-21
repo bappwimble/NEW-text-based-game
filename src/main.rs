@@ -18,14 +18,9 @@ fn playersetup() -> player::Player {
 
 fn main() {
     let player = playersetup();
+    basic_functions::statsdisplay(&player);
 
     loop {
-        basic_functions::statsdisplay(&player);
-
-        creaturespawn();
-
-        loop {
-            damageloop();
-        }
+        damageloop(&player);
     }
 }

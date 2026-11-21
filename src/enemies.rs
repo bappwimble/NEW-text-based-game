@@ -1,3 +1,5 @@
+use rand::prelude::IndexedRandom;
+
 #[derive(Clone, Copy)]
 pub struct Enemystats {
     pub title: &'static str,
@@ -29,4 +31,8 @@ pub const WENDYS_MANAGER: Enemystats = Enemystats {
     enemydamage: 8,
 };
 
-pub const ALL_ENEMIES: [Enemystats; 4] = [SKULL, GHOST, REDDIT_CHUD, WENDYS_MANAGER];
+pub fn creaturespawn() -> Enemystats {
+    let templates = [SKULL, GHOST, REDDIT_CHUD, WENDYS_MANAGER];
+    let mut rng = rand::rng();
+    *templates.choose(&mut rng).unwrap()
+}

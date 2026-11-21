@@ -1,5 +1,4 @@
-pub use std;
-pub use std::io;
+use std::io;
 
 pub struct Weapon {
     pub name: &'static str,

@@ -1,6 +1,5 @@
-use crate::enemies::{self, ALL_ENEMIES, Enemystats};
+use crate::enemies::{Enemystats, creaturespawn};
 use crate::player::Player;
-use rand::Rng;
 use std::io;
 
 pub fn statsdisplay(player: &Player) {
@@ -10,30 +9,37 @@ pub fn statsdisplay(player: &Player) {
     );
 }
 
-pub fn creaturespawn() -> Enemystats {
-    let mut rng = rand::rng();
-    let index = rng.random_range(0..ALL_ENEMIES.len());
-
-    enemies::ALL_ENEMIES[index]
+pub fn announce_enemy(enemy: &Enemystats) {
+    println!(
+        "\n{} spawns!\nit has {} health, and does {} damage per hit.",
+        enemy.title, enemy.health, enemy.enemydamage
+    );
 }
 
-pub fn damageloop() {
-    let mut input = String::new();
-    let current_enemy = creaturespawn();
+pub fn damage(player: &Player, enemy: &mut Enemystats) {
+    enemy.health -= player.damage;
 
     println!(
-        "{} spawns!\nit has {} health, and does {} damage per hit.",
-        current_enemy.title, current_enemy.health, current_enemy.enemydamage
-    );
+        "{} takes '{}' damage! {} is now at {} health.",
+        enemy.title, player.damage, enemy.title, enemy.health,
+    )
+}
 
-    println!("\nwaiting...\n\n");
-    io::stdin().read_line(&mut input).expect("no text?");
+pub fn damageloop(player: &Player) {
+    let mut input = String::new();
+    let mut current_enemy = creaturespawn();
+    announce_enemy(&current_enemy);
 
-    if input.trim() == "hit" {
-        println!("goog");
-    } else if input.trim().is_empty() {
-        println!("?");
-    } else {
-        return;
+    loop {
+        println!("\nwaiting for input...\n\n");
+        io::stdin().read_line(&mut input).expect("no text?");
+
+        if input.trim() == "hit" {
+            damage(player, &mut current_enemy);
+        } else if input.trim().is_empty() {
+            println!("?");
+        } else {
+            continue;
+        }
     }
 }

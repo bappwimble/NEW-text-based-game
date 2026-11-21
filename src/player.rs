@@ -33,7 +33,6 @@ pub fn playertitle() -> Player {
 }
 
 pub fn playerdamage(player: &mut Player) {
-    let player = player;
     player.damage = match player.item.as_str() {
         "iron sword" => items::SWORD.damage,
         "bow" => items::BOW.damage,
