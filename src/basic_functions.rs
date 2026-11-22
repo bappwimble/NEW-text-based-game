@@ -1,4 +1,4 @@
-use crate::enemies::{Enemystats, creaturespawn};
+use crate::enemies::*;
 use crate::player::Player;
 use std::io;
 
@@ -28,17 +28,22 @@ pub fn damage(player: &Player, enemy: &mut Enemystats) {
 pub fn damageloop(player: &Player) {
     let mut input = String::new();
     let mut current_enemy = creaturespawn();
-    announce_enemy(&current_enemy);
 
     loop {
+        input.clear();
         println!("\nwaiting for input...\n\n");
-        io::stdin().read_line(&mut input).expect("no text?");
+        io::stdin().read_line(&mut input).expect("");
 
-        if input.trim() == "hit" {
-            damage(player, &mut current_enemy);
-        } else if input.trim().is_empty() {
-            println!("?");
-        } else {
+        match input.trim() {
+            "hit" => damage(player, &mut current_enemy),
+            _ => println!("error! bad text?"),
+        }
+
+        if !current_enemy.is_alive() {
+            println!("you fricking WIN YOU FUCKING PEICE OF SHIT I HATE YOU");
+            break;
+        } else if current_enemy.is_alive() {
+            announce_enemy(&current_enemy);
             continue;
         }
     }

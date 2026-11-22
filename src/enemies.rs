@@ -31,6 +31,12 @@ pub const WENDYS_MANAGER: Enemystats = Enemystats {
     enemydamage: 8,
 };
 
+impl Enemystats {
+    pub fn is_alive(&self) -> bool {
+        self.health > 0
+    }
+}
+
 pub fn creaturespawn() -> Enemystats {
     let templates = [SKULL, GHOST, REDDIT_CHUD, WENDYS_MANAGER];
     let mut rng = rand::rng();
